@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="61282d8deee146bca582f584c1894ee5" Name="Diagram1">
+        <EntityTypeShape EntityType="TourCompanyModel.City" Width="1.5" PointX="1.5" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourCompanyModel.Customer" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourCompanyModel.sysdiagram" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourCompanyModel.Tour" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourCompanyModel.TravelPackage" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourCompanyModel.Сountries" Width="1.5" PointX="1.5" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TourCompanyModel.User" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <AssociationConnector Association="TourCompanyModel.FK_Cities_Countries" ManuallyRouted="false" />
+        <AssociationConnector Association="TourCompanyModel.FK_Tours_Cities" ManuallyRouted="false" />
+        <AssociationConnector Association="TourCompanyModel.FK_TravelPackages_Customers" ManuallyRouted="false" />
+        <AssociationConnector Association="TourCompanyModel.Users_CustomerID_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="TourCompanyModel.FK_TravelPackages_Tours" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
