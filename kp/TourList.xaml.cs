@@ -50,7 +50,6 @@ namespace kp
         private void BuyButton_Click(object sender, RoutedEventArgs e)
         {
             var selectedTour = (sender as Button).DataContext as Tour;
-
             // Получаем количество билетов, введенное пользователем
             var buyButton = sender as Button;
             var ticketsCount = Convert.ToInt32(buyButton.Tag);
@@ -64,28 +63,22 @@ namespace kp
                 {
                     MessageBox.Show("Количество билетов превышает доступное количество.");
                 }
+                if(ticketsCount == 0)
+                {
+                    MessageBox.Show("Количество билетов для покупки не может быть равно 0");
+                }
                 else
                 {
-                    tour.TravelPackageQty -= ticketsCount;
-                    tourCompanyEntities.SaveChanges();
-                    UpdateTours();
-                    MessageBox.Show($"Вы купили {ticketsCount} билетов на тур \"{tour.TourName}\".");
+                    MessageBoxResult result = MessageBox.Show($"Вы уверены, что хотите купить {ticketsCount} билетов на тур \"{tour.TourName}\"?", "Подтверждение покупки", MessageBoxButton.YesNo);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        tour.TravelPackageQty -= ticketsCount;
+                        tourCompanyEntities.SaveChanges();
+                        UpdateTours();
+                        MessageBox.Show($"Вы успешно купили {ticketsCount} билетов на тур \"{tour.TourName}\".");
+                    }
                 }
             }
         }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            var selectedTour = (sender as Button).DataContext as Tour;
-            var buyButton = sender as Button;
-            var ticketsCount = Convert.ToInt32(buyButton.Tag);
-
-            // Отменяем покупку
-            selectedTour.TravelPackageQty += ticketsCount;
-            TourCompanyEntities1.GetContext().SaveChanges();
-
-            // Обновляем список туров
-            UpdateTours();
-        }
     }
-}
+    }
