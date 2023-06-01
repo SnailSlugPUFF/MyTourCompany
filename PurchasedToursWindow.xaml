@@ -1,0 +1,14 @@
+﻿<Window x:Class="kp.PurchasedToursWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:kp"
+        mc:Ignorable="d"
+        Title="Purchased Tours" Height="450" Width="400">
+    <Grid>
+        <ScrollViewer>
+            <StackPanel x:Name="StackPanelTours" Margin="10" />
+        </ScrollViewer>
+    </Grid>
+</Window>

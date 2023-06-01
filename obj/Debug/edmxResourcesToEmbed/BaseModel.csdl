@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TourCompanyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="CityID" />
+    </Key>
+    <Property Name="CityID" Type="Int32" Nullable="false" />
+    <Property Name="CountryID" Type="Int32" Nullable="false" />
+    <Property Name="CityName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Сountries" Relationship="Self.FK_Cities_Countries" FromRole="Cities" ToRole="Сountries" />
+    <NavigationProperty Name="Tours" Relationship="Self.FK_Tours_Cities" FromRole="Cities" ToRole="Tours" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="Int32" Nullable="false" />
+    <Property Name="CustomerName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CustomerSurname" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CustomerMiddleName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <Property Name="PassportNumber" Type="Int32" Nullable="false" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="12" FixedLength="true" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="TravelPackages" Relationship="Self.FK_TravelPackages_Customers" FromRole="Customers" ToRole="TravelPackages" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Tour">
+    <Key>
+      <PropertyRef Name="TourID" />
+    </Key>
+    <Property Name="TourID" Type="Int32" Nullable="false" />
+    <Property Name="TourName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DayQty" Type="Int32" Nullable="false" />
+    <Property Name="CityID" Type="Int32" Nullable="false" />
+    <Property Name="TourPrice" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="TourDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="TravelPackageQty" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="City" Relationship="Self.FK_Tours_Cities" FromRole="Tours" ToRole="Cities" />
+    <NavigationProperty Name="TravelPackages" Relationship="Self.FK_TravelPackages_Tours" FromRole="Tours" ToRole="TravelPackages" />
+    <Property Name="ImagePreview" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TravelPackage">
+    <Key>
+      <PropertyRef Name="TravelPackageID" />
+    </Key>
+    <Property Name="TravelPackageID" Type="Int32" Nullable="false" />
+    <Property Name="TourID" Type="Int32" Nullable="false" />
+    <Property Name="CustomerID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK_TravelPackages_Customers" FromRole="TravelPackages" ToRole="Customers" />
+    <NavigationProperty Name="Tour" Relationship="Self.FK_TravelPackages_Tours" FromRole="TravelPackages" ToRole="Tours" />
+  </EntityType>
+  <EntityType Name="Сountries">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="Int32" Nullable="false" />
+    <Property Name="CountryName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Cities" Relationship="Self.FK_Cities_Countries" FromRole="Сountries" ToRole="Cities" />
+  </EntityType>
+  <Association Name="FK_Cities_Countries">
+    <End Role="Сountries" Type="Self.Сountries" Multiplicity="1" />
+    <End Role="Cities" Type="Self.City" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Сountries">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="Cities">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tours_Cities">
+    <End Role="Cities" Type="Self.City" Multiplicity="1" />
+    <End Role="Tours" Type="Self.Tour" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="CityID" />
+      </Principal>
+      <Dependent Role="Tours">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TravelPackages_Customers">
+    <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+    <End Role="TravelPackages" Type="Self.TravelPackage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="TravelPackages">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TravelPackages_Tours">
+    <End Role="Tours" Type="Self.Tour" Multiplicity="1" />
+    <End Role="TravelPackages" Type="Self.TravelPackage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tours">
+        <PropertyRef Name="TourID" />
+      </Principal>
+      <Dependent Role="TravelPackages">
+        <PropertyRef Name="TourID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TourCompanyEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Cities" EntityType="Self.City" />
+    <EntitySet Name="Customers" EntityType="Self.Customer" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Tours" EntityType="Self.Tour" />
+    <EntitySet Name="TravelPackages" EntityType="Self.TravelPackage" />
+    <EntitySet Name="Сountries" EntityType="Self.Сountries" />
+    <AssociationSet Name="FK_Cities_Countries" Association="Self.FK_Cities_Countries">
+      <End Role="Сountries" EntitySet="Сountries" />
+      <End Role="Cities" EntitySet="Cities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tours_Cities" Association="Self.FK_Tours_Cities">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="Tours" EntitySet="Tours" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TravelPackages_Customers" Association="Self.FK_TravelPackages_Customers">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="TravelPackages" EntitySet="TravelPackages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TravelPackages_Tours" Association="Self.FK_TravelPackages_Tours">
+      <End Role="Tours" EntitySet="Tours" />
+      <End Role="TravelPackages" EntitySet="TravelPackages" />
+    </AssociationSet>
+    <EntitySet Name="Users" EntityType="TourCompanyModel.User" />
+  </EntityContainer>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Login" />
+    </Key>
+    <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Pass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+</Schema>

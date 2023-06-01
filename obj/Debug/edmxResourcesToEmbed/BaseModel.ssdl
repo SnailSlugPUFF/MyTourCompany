@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище TourCompanyModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Cities">
+    <Key>
+      <PropertyRef Name="CityID" />
+    </Key>
+    <Property Name="CityID" Type="int" Nullable="false" />
+    <Property Name="CountryID" Type="int" Nullable="false" />
+    <Property Name="CityName" Type="varchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="int" Nullable="false" />
+    <Property Name="CustomerName" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="CustomerSurname" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="CustomerMiddleName" Type="varchar" MaxLength="256" />
+    <Property Name="PassportNumber" Type="int" Nullable="false" />
+    <Property Name="PhoneNumber" Type="char" MaxLength="12" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Tours">
+    <Key>
+      <PropertyRef Name="TourID" />
+    </Key>
+    <Property Name="TourID" Type="int" Nullable="false" />
+    <Property Name="TourName" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="DayQty" Type="int" Nullable="false" />
+    <Property Name="CityID" Type="int" Nullable="false" />
+    <Property Name="TourPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="TourDate" Type="date" Nullable="false" />
+    <Property Name="TravelPackageQty" Type="int" Nullable="false" />
+    <Property Name="ImagePreview" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TravelPackages">
+    <Key>
+      <PropertyRef Name="TravelPackageID" />
+    </Key>
+    <Property Name="TravelPackageID" Type="int" Nullable="false" />
+    <Property Name="TourID" Type="int" Nullable="false" />
+    <Property Name="CustomerID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Login" />
+    </Key>
+    <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Pass" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Сountries">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="int" Nullable="false" />
+    <Property Name="CountryName" Type="varchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Cities_Countries">
+    <End Role="Сountries" Type="Self.Сountries" Multiplicity="1" />
+    <End Role="Cities" Type="Self.Cities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Сountries">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="Cities">
+        <PropertyRef Name="CountryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tours_Cities">
+    <End Role="Cities" Type="Self.Cities" Multiplicity="1" />
+    <End Role="Tours" Type="Self.Tours" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="CityID" />
+      </Principal>
+      <Dependent Role="Tours">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TravelPackages_Customers">
+    <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+    <End Role="TravelPackages" Type="Self.TravelPackages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="TravelPackages">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TravelPackages_Tours">
+    <End Role="Tours" Type="Self.Tours" Multiplicity="1" />
+    <End Role="TravelPackages" Type="Self.TravelPackages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tours">
+        <PropertyRef Name="TourID" />
+      </Principal>
+      <Dependent Role="TravelPackages">
+        <PropertyRef Name="TourID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище TourCompanyModelContainer">
+    <EntitySet Name="Cities" EntityType="Self.Cities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tours" EntityType="Self.Tours" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TravelPackages" EntityType="Self.TravelPackages" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Сountries" EntityType="Self.Сountries" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Cities_Countries" Association="Self.FK_Cities_Countries">
+      <End Role="Сountries" EntitySet="Сountries" />
+      <End Role="Cities" EntitySet="Cities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tours_Cities" Association="Self.FK_Tours_Cities">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="Tours" EntitySet="Tours" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TravelPackages_Customers" Association="Self.FK_TravelPackages_Customers">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="TravelPackages" EntitySet="TravelPackages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TravelPackages_Tours" Association="Self.FK_TravelPackages_Tours">
+      <End Role="Tours" EntitySet="Tours" />
+      <End Role="TravelPackages" EntitySet="TravelPackages" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
